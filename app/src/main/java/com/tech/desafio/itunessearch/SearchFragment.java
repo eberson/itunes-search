@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tech.desafio.itunes.model.Music;
 import com.tech.desafio.itunessearch.adapter.MusicAdapter;
+import com.tech.desafio.itunessearch.tasks.SearchTask;
 
 import java.util.List;
 
@@ -39,7 +39,6 @@ public class SearchFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-
     public static SearchFragment newInstance(int sectionNumber) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
@@ -81,6 +80,7 @@ public class SearchFragment extends Fragment {
                             Toast.makeText(getContext(),
                                            getContext().getResources().getString(R.string.not_found_items),
                                            Toast.LENGTH_SHORT).show();
+
                             return;
                         }
 

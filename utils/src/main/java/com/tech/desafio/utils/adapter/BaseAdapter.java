@@ -1,26 +1,26 @@
-package com.tech.desafio.itunessearch.adapter;
+package com.tech.desafio.utils.adapter;
 
 import android.content.Context;
-import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by oliveieb on 04/10/2017.
  */
 
-public abstract class CustomBaseAdapter<T> extends BaseAdapter {
+public abstract class BaseAdapter<T extends Comparable> extends android.widget.BaseAdapter {
 
     private List<T> elements;
     protected Context context;
 
-    public CustomBaseAdapter(Context context) {
+    public BaseAdapter(Context context) {
         this(context, new ArrayList<T>());
     }
 
-    public CustomBaseAdapter(Context context, List<T> elements) {
+    public BaseAdapter(Context context, List<T> elements) {
         this.elements = elements;
         this.context = context;
     }
@@ -55,6 +55,9 @@ public abstract class CustomBaseAdapter<T> extends BaseAdapter {
         }
 
         this.elements.addAll(elements);
+
+        Collections.sort(this.elements);
+
         notifyDataSetChanged();
     }
 

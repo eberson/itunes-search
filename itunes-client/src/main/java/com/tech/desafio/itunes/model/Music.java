@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Music implements Serializable {
+public class Music implements Serializable, Comparable<Music> {
 
     @JsonProperty("artistName")
     private String artist;
@@ -64,5 +64,20 @@ public class Music implements Serializable {
         result = 31 * result + getName().hashCode();
         result = 31 * result + (getPhoto() != null ? getPhoto().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(Music music) {
+        if (music == null){
+            return 1;
+        }
+
+        int result = this.name.compareTo(music.name);
+
+        if (result != 0){
+            return result;
+        }
+
+        return this.artist.compareTo(music.artist);
     }
 }

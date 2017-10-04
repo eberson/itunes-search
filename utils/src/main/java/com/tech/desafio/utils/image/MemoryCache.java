@@ -1,14 +1,13 @@
-package com.tech.desafio.itunessearch.image;
-
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.WeakHashMap;
+package com.tech.desafio.utils.image;
 
 import android.graphics.Bitmap;
 import android.util.Log;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.WeakHashMap;
 
 /**
  * Created by oliveieb on 04/10/2017.

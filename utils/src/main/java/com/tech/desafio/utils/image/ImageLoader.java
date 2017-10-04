@@ -1,4 +1,11 @@
-package com.tech.desafio.itunessearch.image;
+package com.tech.desafio.utils.image;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,16 +21,6 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.ImageView;
-
-import com.tech.desafio.itunessearch.R;
-
 /**
  * Created by oliveieb on 04/10/2017.
  */
@@ -36,12 +33,13 @@ public class ImageLoader {
 
     ExecutorService executorService;
 
-    public ImageLoader(Context context) {
+    final int stubId;
+
+    public ImageLoader(Context context, int stubId) {
         fileCache = new FileCache(context);
         executorService = Executors.newFixedThreadPool(5);
+        this.stubId = stubId;
     }
-
-    final int stub_id = R.mipmap.ic_launcher;
 
     public void displayImage(String url, ImageView imageView) {
         imageViews.put(imageView, url);
@@ -52,7 +50,7 @@ public class ImageLoader {
         }
         else {
             queuePhoto(url, imageView);
-            imageView.setImageResource(stub_id);
+            imageView.setImageResource(stubId);
         }
     }
 
@@ -61,7 +59,6 @@ public class ImageLoader {
         executorService.submit(new PhotosLoader(p));
     }
 
-    @Nullable
     private Bitmap getBitmap(String url) {
         File f = fileCache.getFile(url);
 
@@ -174,7 +171,7 @@ public class ImageLoader {
             if (bitmap != null)
                 photoToLoad.imageView.setImageBitmap(bitmap);
             else
-                photoToLoad.imageView.setImageResource(stub_id);
+                photoToLoad.imageView.setImageResource(stubId);
         }
     }
 

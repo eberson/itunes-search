@@ -1,16 +1,16 @@
-package com.tech.desafio.itunessearch;
+package com.tech.desafio.itunessearch.tasks;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.tech.desafio.itunes.client.ItunesClient;
 import com.tech.desafio.itunes.client.ItunesDiscover;
 import com.tech.desafio.itunes.client.SSLUtil;
 import com.tech.desafio.itunes.model.Music;
+import com.tech.desafio.itunessearch.R;
+import com.tech.desafio.utils.tasks.BaseTask;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,17 +19,19 @@ import java.util.List;
  * Created by oliveieb on 04/10/2017.
  */
 
-public class SearchTask extends AsyncTask<String, Void, List<Music>>{
+public class SearchTask extends BaseTask<String, Void, List<Music>> {
 
-    private String errorMessage;
-    private Context context;
     private OnSearchEndListener listener;
 
     public SearchTask(Context context) {
-        this.context = context;
+        this(context, null);
     }
 
     public SearchTask(Context context, OnSearchEndListener listener) {
+        super(context,
+                context.getResources().getString(R.string.progress_title),
+                context.getResources().getString(R.string.progress_message));
+
         this.context = context;
         this.listener = listener;
     }
@@ -64,16 +66,7 @@ public class SearchTask extends AsyncTask<String, Void, List<Music>>{
     }
 
     @Override
-    protected void onPostExecute(List<Music> musics) {
-        super.onPostExecute(musics);
-
-        if (errorMessage != null){
-            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Log.i("ITUNES", "getting results with no error...");
-
+    protected void doAfterProcessing(List<Music> musics) {
         if (listener != null){
             Log.i("ITUNES", "running listener to fill screeen...");
             listener.onSearchEnd(musics);

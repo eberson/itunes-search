@@ -57,6 +57,24 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1){
+                    ((LikeFragment) mSectionsPagerAdapter.getItem(1)).loadLikedMusics();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -92,33 +110,54 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private Fragment[] fragments;
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+
+            fragments = new Fragment[2];
         }
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return SearchFragment.newInstance(position + 1);
+            Fragment fragment;
+
+            if (fragments[position] == null){
+
+                switch (position){
+                    case 0:
+                        fragment = SearchFragment.newInstance(position + 1);
+                        break;
+                    case 1:
+                        fragment = LikeFragment.newInstance(position + 1);
+                        break;
+                    default:
+                        fragment = null;
+                }
+
+                fragments[position] = fragment;
+            }
+            else{
+                fragment = fragments[position];
+            }
+
+            return fragment;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return fragments.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Match";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
+                    return "Like";
             }
+
             return null;
         }
     }

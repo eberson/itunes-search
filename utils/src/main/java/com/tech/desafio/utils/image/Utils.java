@@ -1,4 +1,4 @@
-package com.tech.desafio.itunessearch.image;
+package com.tech.desafio.utils.image;
 
 import java.io.InputStream;
 import java.io.OutputStream;

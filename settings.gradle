@@ -1,1 +1,1 @@
-include ':app', ':itunes-client'
+include ':app', ':itunes-client', ':utils'

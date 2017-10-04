@@ -8,4 +8,7 @@
     <string name="search_field">Informe algo para ser pesquisado...</string>
     <string name="without_internet">Não foi possível conectar na internet</string>
     <string name="not_found_items">Não encontrei nada com seus parâmetros</string>
+
+    <string name="progress_title">Processando</string>
+    <string name="progress_message">Estamos processando sua requisição, por favor, aguarde...</string>
 </resources>
